@@ -31,14 +31,57 @@ information including information about the scholar, all of their
 publications, and citations of their top-cited first-authored work.
 
 ``` r
-nca_gs <- get_gs_cite_data(id=="DpaI7XMAAAAJ") # not run, data pre-loaded for example
-
-str(nca_gs)
+nca <- get_gs_cite_data(id=="DpaI7XMAAAAJ") # not run, data pre-loaded for example
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+``` r
+str(nca)
+```
+
+    ## List of 8
+    ##  $ scholar_dat         :List of 10
+    ##   ..$ id         : chr "DpaI7XMAAAAJ"
+    ##   ..$ name       : chr "Nate Apathy"
+    ##   ..$ affiliation: chr "Postdoctoral Fellow, University of Pennsylvania"
+    ##   ..$ total_cites: num 134
+    ##   ..$ h_index    : num 8
+    ##   ..$ i10_index  : num 6
+    ##   ..$ fields     : chr "verified email at pennmedicine.upenn.edu - homepage"
+    ##   ..$ homepage   : chr "http://www.nateapathy.com/"
+    ##   ..$ interests  : chr [1:4] "Health Services Research" "Health IT" "Informatics" "Health Policy"
+    ##   ..$ coauthors  : chr [1:20] "A Jay Holmgren" "Christopher A Harle, PhD" "Julia Adler-Milstein" "Joshua R Vest, PhD, MPH" ...
+    ##  $ pubs                :'data.frame':    32 obs. of  10 variables:
+    ##   ..$ title       : chr [1:32] "Barriers to hospital electronic public health reporting and implications for the COVID-19 pandemic" "Opt-In Consent Policies: Potential Barriers to Hospital Health Information Exchange" "Trends and gaps in awareness of direct-to-consumer genetic tests from 2007 to 2014" "A decade post-HITECH: Critical access hospitals have electronic health records but struggle to keep up with oth"| __truncated__ ...
+    ##   ..$ author      : chr [1:32] "AJ Holmgren, NC Apathy, J Adler-Milstein" "NC Apathy, AJ Holmgren" "NC Apathy, T Menser, LM Keeran, EW Ford, CA Harle, TR Huerta" "NC Apathy, AJ Holmgren, J Adler-Milstein" ...
+    ##   ..$ journal     : chr [1:32] "Journal of the American Medical Informatics Association" "The American Journal of Managed Care" "American journal of preventive medicine" "Journal of the American Medical Informatics Association" ...
+    ##   ..$ number      : chr [1:32] "27 (8), 1306-1309" "" "54 (6), 806-813" "28 (9), 1947-1954" ...
+    ##   ..$ cites       : num [1:32] 26 14 12 10 10 10 9 8 8 6 ...
+    ##   ..$ year        : num [1:32] 2020 2020 2018 2021 2021 ...
+    ##   ..$ cid         : chr [1:32] "16200820819106237216" "4949578976304386628" "3139719257396025812" "13306797576420926985" ...
+    ##   ..$ pubid       : chr [1:32] "ufrVoPGSRksC" "WF5omc3nYNoC" "qjMakFHDy7sC" "aqlVkmm33-oC" ...
+    ##   ..$ first_author: chr [1:32] "AJ Holmgren" "NC Apathy" "NC Apathy" "NC Apathy" ...
+    ##   ..$ lead_flag   : num [1:32] 0 1 1 1 0 1 0 0 0 0 ...
+    ##  $ top_cid             : chr "4949578976304386628"
+    ##  $ cites_of_top_cid    : num 14
+    ##  $ strts               : num [1:2] 0 10
+    ##  $ urls                : chr [1:2] "https://scholar.google.com/scholar?start=0&hl=en&as_sdt=5,39&sciodt=0,39&cites=4949578976304386628&scipsc=" "https://scholar.google.com/scholar?start=10&hl=en&as_sdt=5,39&sciodt=0,39&cites=4949578976304386628&scipsc="
+    ##  $ citing_articles_html:List of 2
+    ##   ..$ :List of 2
+    ##   .. ..$ node:<externalptr> 
+    ##   .. ..$ doc :<externalptr> 
+    ##   .. ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"
+    ##   ..$ :List of 2
+    ##   .. ..$ node:<externalptr> 
+    ##   .. ..$ doc :<externalptr> 
+    ##   .. ..- attr(*, "class")= chr [1:2] "xml_document" "xml_node"
+    ##  $ citing_article_data :'data.frame':    13 obs. of  5 variables:
+    ##   ..$ title  : chr [1:13] "Identifying Opportunities to Strengthen the Public Health Informatics Infrastructure: Exploring Hospitals' Chal"| __truncated__ "Removing barriers for digital health through organizing ambidexterity in hospitals" "Unfulfilled promises of health information exchange: What inhibits ambulatory clinics from electronically shari"| __truncated__ "Practice and market factors associated with provider volume of health information exchange" ...
+    ##   ..$ scrape : chr [1:13] "DM Walker, VA Yeager, J Lawrence… - The Milbank …, 2021 - Wiley Online Library" "A Gleiss, S Lewandowski - Journal of Public Health, 2022 - Springer" "R Chandrasekaran, B Sankaranarayanan… - International Journal of …, 2021 - Elsevier" "NC Apathy, JR Vest, J Adler-Milstein… - Journal of the …, 2021 - academic.oup.com" ...
+    ##   ..$ authors: chr [1:13] "DM Walker, VA Yeager, J Lawrence" "A Gleiss, S Lewandowski" "R Chandrasekaran, B Sankaranarayanan" "NC Apathy, JR Vest, J Adler-Milstein" ...
+    ##   ..$ yr     : num [1:13] 2021 2022 2021 2021 2020 ...
+    ##   ..$ cites  : num [1:13] 5 7 3 3 2 2 1 0 0 0 ...
 
 ## `get_pct_first()`
 
 This is a function that calculates the share of a given scholar’s
+citations that are from first-authored publications.

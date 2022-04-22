@@ -1,0 +1,15 @@
+Package: ncaMisc
+Type: Package
+Title: Miscellaneous Functions for Nate Apathy
+Version: 0.1.0
+Author: Nate C. Apathy, PhD
+Maintainer: Nate C. Apathy, PhD <nate.apathy@gmail.com>
+Description: This package contains a few random functions that I use in my own work.
+License: CC-BY-SA
+Encoding: UTF-8
+LazyData: true
+Imports:
+    tidyverse,
+    scholar,
+    lubridate,
+    rvest

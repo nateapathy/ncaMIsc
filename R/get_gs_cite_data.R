@@ -8,7 +8,7 @@ get_gs_cite_data <- function(id) {
   prof <- scholar::get_profile(id)
   l_name <- trimws(str_extract(prof$name,"\\s+[^ ]+$"))
   # now get the cid of their top cited first authored pub
-  pub_dat <- get_publications(id) %>%
+  pub_dat <- scholar::get_publications(id) %>%
     mutate(first_author=str_extract(author, "[^,]+"),
            lead_flag=if_else(grepl(l_name,first_author)==T,1,0))
   top_cid <- pub_dat %>%

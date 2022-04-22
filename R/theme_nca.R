@@ -1,6 +1,6 @@
 # placeholder package for my own ggplot theme
 #
 
-hello <- function() {
-  print("Hello, world!")
+theme_nca <- function() {
+  # eventually this will house my own personal ggplot theme
 }

@@ -12,7 +12,7 @@ get_gs_cite_data <- function(id) {
     mutate(first_author=str_extract(author, "[^,]+"),
            lead_flag=if_else(grepl(l_name,first_author)==T,1,0))
   top_cid <- pub_dat %>%
-    filter(lead_flag==1&cites==max(cites[lead_flag==1])) %>% pull(cid)
+    dplyr::filter(lead_flag==1&cites==max(cites[lead_flag==1])) %>% pull(cid)
   top_cid <- top_cid[1] # take the first one in the case of ties
   top_cid_yr <- pub_dat %>%
     filter(cid==top_cid) %>% pull(year)

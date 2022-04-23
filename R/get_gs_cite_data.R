@@ -2,6 +2,14 @@
 # and save publication data and all cites of the top-cited first authored pub
 # returns an 8-item list
 
+## documentation
+#' Get a scholar's Google Scholar data in a usable format.
+#'
+#' @param id A Google Scholar ID from a scholar's profile page URL
+#' @return A list of data from the scholar's profile, list of publications, and articles citing the scholar's top-cited first-authored publication.
+#' @examples
+#' get_gs_cite_data(id="DpaI7XMAAAAJ")
+
 get_gs_cite_data <- function(id) {
   # this takes a scholar's ID, and scrapes info on their most cited first authored pub
   # so get scholar name

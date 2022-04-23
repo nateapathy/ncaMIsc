@@ -12,3 +12,4 @@ Imports:
     dplyr,
     scholar,
     rvest
+RoxygenNote: 7.1.1

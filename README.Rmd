@@ -12,7 +12,7 @@ library(scholar)
 load(file="nca_gs.Rda")
 ```
 
-## Nate's Miscellaneous Functions
+# Nate's Miscellaneous Functions
 
 Hi, I'm [Nate C. Apathy, PhD](https://www.nateapathy.com). I do health services and health policy research focused on health information technology. This is an R package that holds a bunch of miscellaneous functions that I use in my research, or have just built for fun.
 
@@ -30,7 +30,7 @@ This is a function that collects a bunch of data from a [Google Scholar](https:/
 
 ```{r gs_cite_data, echo=T}
 
-nca_gs <- get_gs_cite_data(id="DpaI7XMAAAAJ") # not run, data pre-loaded for example
+nca_gs <- get_gs_cite_data(id="DpaI7XMAAAAJ")
 
 str(nca_gs)
 

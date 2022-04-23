@@ -1,5 +1,5 @@
 
-## Nate’s Miscellaneous Functions
+# Nate’s Miscellaneous Functions
 
 Hi, I’m [Nate C. Apathy, PhD](https://www.nateapathy.com). I do health
 services and health policy research focused on health information
@@ -29,11 +29,9 @@ information including information about the scholar, all of their
 publications, and citations of their top-cited first-authored work.
 
 ``` r
-nca <- get_gs_cite_data(id="DpaI7XMAAAAJ") # not run, data pre-loaded for example
-```
+nca_gs <- get_gs_cite_data(id="DpaI7XMAAAAJ")
 
-``` r
-str(nca)
+str(nca_gs)
 ```
 
     ## List of 8
@@ -59,9 +57,9 @@ str(nca)
     ##   ..$ pubid       : chr [1:32] "ufrVoPGSRksC" "WF5omc3nYNoC" "qjMakFHDy7sC" "aqlVkmm33-oC" ...
     ##   ..$ first_author: chr [1:32] "AJ Holmgren" "NC Apathy" "NC Apathy" "NC Apathy" ...
     ##   ..$ lead_flag   : num [1:32] 0 1 1 1 0 1 0 0 0 0 ...
+    ##  $ pct_first           : num 39.6
     ##  $ top_cid             : chr "4949578976304386628"
     ##  $ cites_of_top_cid    : num 14
-    ##  $ strts               : num [1:2] 0 10
     ##  $ urls                : chr [1:2] "https://scholar.google.com/scholar?start=0&hl=en&as_sdt=5,39&sciodt=0,39&cites=4949578976304386628&scipsc=" "https://scholar.google.com/scholar?start=10&hl=en&as_sdt=5,39&sciodt=0,39&cites=4949578976304386628&scipsc="
     ##  $ citing_articles_html:List of 2
     ##   ..$ :List of 2
@@ -79,7 +77,42 @@ str(nca)
     ##   ..$ yr     : num [1:13] 2021 2022 2021 2021 2020 ...
     ##   ..$ cites  : num [1:13] 5 7 3 3 2 2 1 0 0 0 ...
 
-## `get_pct_first()`
+So what? What can we do with this data? Well, the main goal I had was to
+be able to visualize the “influence” of a scholar’s top-cited
+first-authored publication. This gives us a sense of what additional
+science that work has enabled. Eventually we can build this into layers
+of a network where each citing article then has its own forward-citation
+network. Maybe someday I’ll add an option for how many citation layers
+you want and then build an animation to show that. But for now, we’re
+just going to focus on the single layer.
 
-This is a function that calculates the share of a given scholar’s
-citations that are from first-authored publications.
+``` r
+# first get a few bits of metadata 
+plotmet <- nca_gs$pubs %>%
+  filter(cid==nca_gs$top_cid)
+
+# now create the "influence plot"
+nca_gs$citing_article_data %>%
+  ggplot(aes(x=yr,y=cites,size=cites)) +
+  geom_hline(yintercept = nca_gs$cites_of_top_cid,color="blue") +
+  geom_jitter(alpha=0.5) +
+  labs(title=paste0("Papers citing ",nca_gs$scholar_dat$name,
+                    "'s top first-authored publication",
+                    " (",plotmet$cites,
+                       " citing articles)"),
+       subtitle=paste0(plotmet$title,".",
+                       "\n",plotmet$author,
+                       ". ",plotmet$year,
+                       ". ",plotmet$journal,"."),
+       size="Cites of each citing article",
+       x=NULL,y="Cites") +
+  theme_bw() +
+  theme(plot.subtitle = element_text(face="italic"),
+        legend.position = "bottom")
+```
+
+![](README_files/figure-gfm/cite_plot-1.png)<!-- -->
+
+## `theme_nca()` ggplot2 theme
+
+This is a placeholder for a custom `ggplot2` theme, in development.

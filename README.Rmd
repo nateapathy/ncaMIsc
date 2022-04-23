@@ -1,5 +1,4 @@
 ---
-title: "README"
 output: github_document
 ---
 
@@ -29,15 +28,41 @@ devtools::install_github("nateapathy/ncaMisc")
 
 This is a function that collects a bunch of data from a [Google Scholar](https://scholar.google.com/) profile, including data on all of the studies that cite a given scholar's most-cited first-authored publication. It has one argument: `id = "SCHOLARID"`. The SCHOLARID value is the value in the URL of a given scholar's profile following the `user=` in the URL. For example, my SCHOLARID is `"DpaI7XMAAAAJ"` from the URL of my profile: `https://scholar.google.com/citations?user=DpaI7XMAAAAJ&hl=en`. All you pass to this function is the id in quotes, and it returns a list of information including information about the scholar, all of their publications, and citations of their top-cited first-authored work.
 
-```{r gs_cite_data, echo=T,eval=F}
+```{r gs_cite_data, echo=T}
 
-nca <- get_gs_cite_data(id=="DpaI7XMAAAAJ") # not run, data pre-loaded for example
+nca_gs <- get_gs_cite_data(id="DpaI7XMAAAAJ") # not run, data pre-loaded for example
+
+str(nca_gs)
 
 ```
-```{r gs_str,echo=T,eval=T}
-str(nca)
+
+So what? What can we do with this data? Well, the main goal I had was to be able to visualize the "influence" of a scholar's top-cited first-authored publication. This gives us a sense of what additional science that work has enabled. Eventually we can build this into layers of a network where each citing article then has its own forward-citation network. Maybe someday I'll add an option for how many citation layers you want and then build an animation to show that. But for now, we're just going to focus on the single layer.
+
+```{r cite_plot,echo=T}
+# first get a few bits of metadata 
+plotmet <- nca_gs$pubs %>%
+  filter(cid==nca_gs$top_cid)
+
+# now create the "influence plot"
+nca_gs$citing_article_data %>%
+  ggplot(aes(x=yr,y=cites,size=cites)) +
+  geom_hline(yintercept = nca_gs$cites_of_top_cid,color="blue") +
+  geom_jitter(alpha=0.5) +
+  labs(title=paste0("Papers citing ",nca_gs$scholar_dat$name,
+                    "'s top first-authored publication",
+                    " (",plotmet$cites,
+                       " citing articles)"),
+       subtitle=paste0(plotmet$title,".",
+                       "\n",plotmet$author,
+                       ". ",plotmet$year,
+                       ". ",plotmet$journal,"."),
+       size="Cites of each citing article",
+       x=NULL,y="Cites") +
+  theme_bw() +
+  theme(plot.subtitle = element_text(face="italic"),
+        legend.position = "bottom")
 ```
 
-## `get_pct_first()`
+## `theme_nca()` ggplot2 theme
 
-This is a function that calculates the share of a given scholar's citations that are from first-authored publications.
+This is a placeholder for a custom `ggplot2` theme, in development.

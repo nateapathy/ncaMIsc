@@ -13,13 +13,17 @@ get_gs_cite_data <- function(id) {
   pub_dat <- scholar::get_publications(id) %>%
     mutate(first_author=str_extract(author, "[^,]+"),
            lead_flag=if_else(grepl(l_name,first_author)==T,1,0))
+  pct_first <- sum(pub_dat$cites[pub_dat$lead_flag==1])/sum(pub_dat$cites)*100
   #head(pub_dat)
   top_cid <- pub_dat %>%
-    dplyr::filter(lead_flag==1&cites==max(cites[lead_flag==1])) %>% pull(cid)
+    dplyr::filter(lead_flag==1&cites==max(cites[lead_flag==1])) %>%
+    pull(cid)
   top_cid <- top_cid[1] # take the first one in the case of ties
   top_cid_yr <- pub_dat %>%
-    filter(cid==top_cid) %>% pull(year)
-  # now get the number of cites that one CID has, to know how many pages we need to loop through
+    filter(cid==top_cid) %>%
+    pull(year)
+  # now get the number of cites that one CID has,
+  # to know how many pages we need to loop through
   cites_top_cid <- pub_dat %>% filter(cid==top_cid) %>% pull(cites)
   strts <- c(0:floor(cites_top_cid/10))*10 # 10 results per page
   # but index it to 0 intentionally bc the "start=0" is the default
@@ -71,15 +75,16 @@ get_gs_cite_data <- function(id) {
     citing_dat[[i]] <- cbind(title,ajy,cites)
   }
 
-  citing_article_data <- bind_rows(citing_dat)  %>%
+  citing_article_data <- bind_rows(citing_dat) %>%
     # filter out infeasible citations from before the index article was published
-    filter(yr>=top_cid_yr) # et voila
+    filter(yr>=top_cid_yr)
+  # et voila
 
   return(list("scholar_dat"=prof,
               "pubs"=pub_dat,
+              "pct_first"=pct_first,
               "top_cid"=top_cid,
               "cites_of_top_cid"=cites_top_cid,
-              "strts"=strts,
               "urls"=urls,
               "citing_articles_html"=citing_articles_html,
               "citing_article_data"=citing_article_data))

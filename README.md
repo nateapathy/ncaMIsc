@@ -1,5 +1,3 @@
-README
-================
 
 ## Nate’s Miscellaneous Functions
 
@@ -31,7 +29,7 @@ information including information about the scholar, all of their
 publications, and citations of their top-cited first-authored work.
 
 ``` r
-nca <- get_gs_cite_data(id=="DpaI7XMAAAAJ") # not run, data pre-loaded for example
+nca <- get_gs_cite_data(id="DpaI7XMAAAAJ") # not run, data pre-loaded for example
 ```
 
 ``` r

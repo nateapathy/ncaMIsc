@@ -105,14 +105,26 @@ nca_gs$citing_article_data %>%
                        ". ",plotmet$year,
                        ". ",plotmet$journal,"."),
        size="Cites of each citing article",
-       x=NULL,y="Cites") +
-  theme_bw() +
-  theme(plot.subtitle = element_text(face="italic"),
-        legend.position = "bottom")
+       x=NULL,y="Cites") -> p
+
+p + theme_nca()
 ```
 
 ![](README_files/figure-gfm/cite_plot-1.png)<!-- -->
 
-## `theme_nca()` ggplot2 theme
+## `theme_nca()`
 
-This is a placeholder for a custom `ggplot2` theme, in development.
+This is a minimally customized `ggplot2` theme that changes the font to
+Apple Gothic, strips the grid lines and background, changes a few font
+sizes, and sticks the legend at the bottom. I built this so I don’t have
+to constantly change these things with every plot I make. For example,
+here’s the plot above but using the default `ggplot2` theme,
+`theme_gray()`.
+
+``` r
+p
+```
+
+![](README_files/figure-gfm/def_plot-1.png)<!-- -->
+
+Not **that** different, but just a little more pleasant to look at.

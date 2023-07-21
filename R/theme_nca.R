@@ -4,7 +4,7 @@
 theme_nca <- function() {
   font <- "AppleGothic"   #assign font family up front
 
-  theme_minimal() %+replace%    #replace elements we want to change
+  theme_minimal() %+replace%    # replace elements we want to change
 
     theme(
 
